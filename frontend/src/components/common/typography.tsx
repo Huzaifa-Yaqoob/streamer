@@ -57,7 +57,7 @@ export function H4({ children, className }: TypographyProps) {
     <h4
       className={cn(
         "scroll-m-20 text-2xl font-semibold tracking-tight font-style",
-        // fontStyle.variable,
+        fontStyle.variable,
         className
       )}
     >
