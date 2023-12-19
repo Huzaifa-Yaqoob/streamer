@@ -1,5 +1,10 @@
 import LandingLayout from "@/components/layouts/LandingLayout";
+import PublicLayout from "@/components/layouts/Public";
 
 export default function About() {
-  return <LandingLayout>This is About page</LandingLayout>;
+  return (
+    <PublicLayout>
+      <LandingLayout>This is About page</LandingLayout>
+    </PublicLayout>
+  );
 }

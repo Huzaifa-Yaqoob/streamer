@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 import { registerSchema } from "@/lib/zod-schemas/authSchema";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -18,8 +18,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { DialogFooter } from "@/components/ui/dialog";
+import LoadingButton from "@/components/common/buttons";
+import ErrorMessage from "@/components/common/error-display";
+import useAuth from "@/hooks/useAuth";
 
 export default function RegisterForm() {
+  const router = useRouter();
+  const { isLoading, errorMessage, register } = useAuth();
   const [hidePassword, setHidePassword] = useState(true);
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -30,8 +35,11 @@ export default function RegisterForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof registerSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof registerSchema>) {
+    const res = await register(values);
+    if (res) {
+      router.refresh();
+    }
   }
 
   function showPasswordToggle() {
@@ -102,10 +110,11 @@ export default function RegisterForm() {
           )}
         />
         <DialogFooter>
-          <Button type="submit" className="active:scale-95">
-            Register
-          </Button>
+          <LoadingButton text="Register" isLoading={isLoading} />
         </DialogFooter>
+        <div>
+          <ErrorMessage errorMessage={errorMessage} />
+        </div>
       </form>
     </Form>
   );

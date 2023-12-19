@@ -21,7 +21,7 @@ export default function JoinUs() {
     small: showLoginForm
       ? "Do not have an account?"
       : "Already have an account?",
-    button: showLoginForm ? "Register." : "Login.",
+    button: showLoginForm ? "Register." : "Log In.",
   };
 
   return (

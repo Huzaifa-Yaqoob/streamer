@@ -1,4 +1,6 @@
 import Header from "../pages/common/Header";
+import { redirect } from "next/navigation";
+import { useAuthStore } from "@/lib/zustand/auth-state";
 
 export default function LandingLayout({
   children,
