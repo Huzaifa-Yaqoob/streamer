@@ -1,5 +1,9 @@
-import React from "react";
+import PrivateLayout from "@/components/layouts/Private";
 
 export default function page() {
-  return <div>This is user</div>;
+  return (
+    <PrivateLayout>
+      <div>This is user</div>
+    </PrivateLayout>
+  );
 }

@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { useRouter } from "next/navigation";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { loginSchema } from "@/lib/zod-schemas/authSchema";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -18,8 +18,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { DialogFooter } from "@/components/ui/dialog";
+import LoadingButton from "@/components/common/buttons";
+import ErrorMessage from "@/components/common/error-display";
+import useAuth from "@/hooks/useAuth";
 
 export default function LoginForm() {
+  const router = useRouter();
+  const { isLoading, errorMessage, login } = useAuth();
   const [hidePassword, setHidePassword] = useState(true);
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -29,8 +34,11 @@ export default function LoginForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof loginSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof loginSchema>) {
+    const res = await login(values);
+    if (res) {
+      router.refresh();
+    }
   }
 
   function showPasswordToggle() {
@@ -88,10 +96,9 @@ export default function LoginForm() {
           )}
         />
         <DialogFooter>
-          <Button type="submit" className="active:scale-95">
-            Log In
-          </Button>
+          <LoadingButton text="Log In" isLoading={isLoading} />
         </DialogFooter>
+        <ErrorMessage errorMessage={errorMessage} />
       </form>
     </Form>
   );
