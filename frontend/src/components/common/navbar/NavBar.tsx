@@ -1,7 +1,7 @@
 import { H4 } from "../../common/typography";
 import LogOut from "./LogOut";
 
-export default function NavBar() {
+export default function NavBar(): React.ReactElement {
   return (
     <header className="section sticky top-0 z-10 bg-background shadow border-b">
       <nav className=" flex items-center justify-between ">

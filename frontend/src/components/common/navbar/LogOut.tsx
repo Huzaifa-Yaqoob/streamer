@@ -1,7 +1,7 @@
 "use client";
 
-import { FaSignOutAlt } from "react-icons/fa";
 import { signOut } from "next-auth/react";
+import { FaSignOutAlt } from "react-icons/fa";
 import { H6, P } from "../../common/typography";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +11,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-export default function LogOut() {
+export default function LogOut(): React.ReactElement {
   const logOut = () => {
     signOut({ callbackUrl: "/" });
   };
@@ -20,8 +20,12 @@ export default function LogOut() {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant={"destructive"} onClick={logOut}>
-            <H6 className="text-primary-foreground">
+          <Button
+            variant={"link"}
+            className="p-0 text-destructive"
+            onClick={logOut}
+          >
+            <H6 className="">
               <FaSignOutAlt />
             </H6>
           </Button>

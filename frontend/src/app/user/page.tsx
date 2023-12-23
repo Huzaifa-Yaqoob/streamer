@@ -1,3 +1,7 @@
-export default async function page() {
-  return <main>lorem</main>;
+export default function User(): React.ReactElement {
+  return (
+    <main className="flex-grow grid place-items-center">
+      Upload video, create group
+    </main>
+  );
 }

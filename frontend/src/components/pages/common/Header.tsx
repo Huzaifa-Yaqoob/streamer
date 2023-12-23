@@ -8,7 +8,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-export default function Header() {
+export default function Header(): React.ReactElement {
   return (
     <header className="section sticky top-0">
       <nav className=" flex items-center justify-between ">

@@ -6,7 +6,10 @@ interface ErrorProps {
   className?: string;
 }
 
-export default function ErrorMessage({ errorMessage, className }: ErrorProps) {
+export default function ErrorMessage({
+  errorMessage,
+  className,
+}: ErrorProps): React.ReactElement {
   if (errorMessage === "") {
     return <></>;
   }
