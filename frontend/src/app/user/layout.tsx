@@ -3,11 +3,11 @@ import NavBar from "@/components/common/navbar/NavBar";
 import Footer from "@/components/common/footer/Footer";
 
 export const metadata: Metadata = {
-  title: "Streamer",
+  title: "Streamer | user",
   description: "Watch movies together.",
 };
 
-export default function RootLayout({
+export default function UserLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <div className="min-h-[100dvh] flex flex-col">
       <NavBar />
-      <main className="flex-grow bg-slate-50">{children}</main>
+      {children}
       <Footer />
     </div>
   );

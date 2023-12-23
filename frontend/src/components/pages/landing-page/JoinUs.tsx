@@ -13,7 +13,7 @@ import { H4, Small } from "@/components/common/typography";
 import LoginForm from "./auth-forms/LoginForm";
 import RegisterForm from "./auth-forms/RegisterForm";
 
-export default function JoinUs() {
+export default function JoinUs(): React.ReactElement {
   const [showLoginForm, setShowLoginForm] = useState(true);
 
   const data = {

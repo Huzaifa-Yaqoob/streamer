@@ -5,7 +5,7 @@ import { H1, Lead } from "@/components/common/typography";
 import JoinUs from "@/components/pages/landing-page/JoinUs";
 import LandingLayout from "@/components/layouts/LandingLayout";
 
-export default async function LandingPage() {
+export default async function LandingPage(): Promise<React.ReactElement> {
   const session = await getServerSession(authOptions);
   if (session) {
     redirect("/user");

@@ -22,7 +22,7 @@ import LoadingButton from "@/components/common/buttons";
 import ErrorMessage from "@/components/common/error-display";
 import useAuth from "@/hooks/useAuth";
 
-export default function RegisterForm() {
+export default function RegisterForm(): React.ReactElement {
   const router = useRouter();
   const { isLoading, errorMessage, signedIn } = useAuth();
   const [hidePassword, setHidePassword] = useState(true);
