@@ -9,7 +9,7 @@ export class Jwt {
   async assignToken(payLoad: PayLoad): Promise<string> {
     try {
       const token = await this.jwtService.signAsync(payLoad);
-      return token;
+      return `Bearer ${token}`;
     } catch (error) {
       console.log(error, 'error at assigning token');
       throw new Error();

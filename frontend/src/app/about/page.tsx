@@ -1,10 +1,12 @@
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 import LandingLayout from "@/components/layouts/LandingLayout";
-import PublicLayout from "@/components/layouts/Public";
 
-export default function About() {
-  return (
-    <PublicLayout>
-      <LandingLayout>This is About page</LandingLayout>
-    </PublicLayout>
-  );
+export default async function About() {
+  const session = await getServerSession(authOptions);
+  if (session) {
+    redirect("/user");
+  }
+  return <LandingLayout>This is About page</LandingLayout>;
 }

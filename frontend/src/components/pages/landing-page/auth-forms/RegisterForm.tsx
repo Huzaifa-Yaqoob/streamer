@@ -24,7 +24,7 @@ import useAuth from "@/hooks/useAuth";
 
 export default function RegisterForm() {
   const router = useRouter();
-  const { isLoading, errorMessage, register } = useAuth();
+  const { isLoading, errorMessage, signedIn } = useAuth();
   const [hidePassword, setHidePassword] = useState(true);
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -36,8 +36,9 @@ export default function RegisterForm() {
   });
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
-    const res = await register(values);
-    if (res) {
+    const ok = await signedIn(values, "register");
+
+    if (ok) {
       router.refresh();
     }
   }
