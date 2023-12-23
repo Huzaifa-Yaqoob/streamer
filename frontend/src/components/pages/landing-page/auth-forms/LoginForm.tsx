@@ -4,8 +4,8 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { useRouter } from "next/navigation";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 import { loginSchema } from "@/lib/zod-schemas/authSchema";
 import {
   Form,
@@ -24,7 +24,7 @@ import useAuth from "@/hooks/useAuth";
 
 export default function LoginForm() {
   const router = useRouter();
-  const { isLoading, errorMessage, login } = useAuth();
+  const { isLoading, errorMessage, signedIn } = useAuth();
   const [hidePassword, setHidePassword] = useState(true);
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -35,8 +35,8 @@ export default function LoginForm() {
   });
 
   async function onSubmit(values: z.infer<typeof loginSchema>) {
-    const res = await login(values);
-    if (res) {
+    const ok = await signedIn(values, "login");
+    if (ok) {
       router.refresh();
     }
   }

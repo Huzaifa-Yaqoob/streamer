@@ -1,9 +1,3 @@
-import PrivateLayout from "@/components/layouts/Private";
-
-export default function page() {
-  return (
-    <PrivateLayout>
-      <div>This is user</div>
-    </PrivateLayout>
-  );
+export default async function page() {
+  return <main>lorem</main>;
 }
