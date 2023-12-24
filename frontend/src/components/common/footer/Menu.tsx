@@ -13,7 +13,7 @@ const menuLinks = [
 export default function Menu(): React.ReactElement {
   const pathname = usePathname();
   return (
-    <menu className="flex justify-center items-center p-4 bg-accent shadow rounded gap-8 text-accent-foreground">
+    <menu className="flex justify-center items-center p-4 bg-card shadow rounded gap-8 text-card-foreground">
       {menuLinks.map((link, index) => (
         <Link
           href={link.href}

@@ -1,9 +1,9 @@
 import axios, { AxiosInstance } from "axios";
 
-interface Headers {
+export type Headers = {
   "Content-Type": "application/json" | "multipart/form-data";
-  [authorization: string]: string | undefined;
-}
+  authorization?: string;
+};
 
 export const headerForJSON: Headers = {
   "Content-Type": "application/json",
