@@ -1,5 +1,9 @@
-import React from "react";
+import Profile from "@/components/pages/profile/Profile";
 
-export default function Profile(): React.ReactElement {
-  return <main className="flex-grow ">profile</main>;
+export default function ProfilePage(): React.ReactElement {
+  return (
+    <main className="flex-grow m-auto">
+      <Profile />
+    </main>
+  );
 }

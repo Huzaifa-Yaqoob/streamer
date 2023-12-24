@@ -61,7 +61,10 @@ export class UserService {
     };
   }
 
-  async update(id: string, newUsername: string): Promise<ReturnUsername> {
+  async updateUsername(
+    id: string,
+    newUsername: string,
+  ): Promise<ReturnUsername> {
     const updatedUser = await this.userModel.findByIdAndUpdate(
       id,
       {
@@ -78,7 +81,13 @@ export class UserService {
   }
 
   async remove(id: string) {
-    console.log(id, 'at remove user service');
-    return true;
+    try {
+      console.log(id, 'at remove user service');
+
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   }
 }

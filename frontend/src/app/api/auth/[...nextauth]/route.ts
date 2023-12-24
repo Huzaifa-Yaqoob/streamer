@@ -57,20 +57,22 @@ export const authOptions: NextAuthOptions = {
     signOut: "/",
   },
   callbacks: {
-    async jwt(params: any) {
-      if (params.user) {
-        params.token.token = params.user.token;
-        params.token.image = params.user.avatarUrl;
-        params.token.name = params.user.username;
+    async jwt({ token, user, trigger, session }) {
+      if (trigger === "update" && session?.name) {
+        token.name = session.name;
+      } else if (user) {
+        token.token = user.token;
+        token.image = user.avatarUrl;
+        token.name = user.username;
       }
 
-      return params.token;
+      return token;
     },
     async session({ session, token }) {
       if (session.user) {
         session.user.image = token.image as string;
         session.user.name = token.name as string;
-        (session.user as { token: string }).token = token.token as string;
+        session.user.token = token.token as string;
       }
 
       return session;

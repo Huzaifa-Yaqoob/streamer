@@ -75,7 +75,7 @@ export class UserController {
     @Body() updateUsername: UpdateUsername,
   ): Promise<ReturnUsername> {
     try {
-      return this.userService.update(
+      return this.userService.updateUsername(
         updateUsername.id,
         updateUsername.username,
       );
