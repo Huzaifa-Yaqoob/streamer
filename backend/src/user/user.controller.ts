@@ -3,12 +3,18 @@ import {
   Post,
   Body,
   Patch,
-  Param,
   Delete,
   UsePipes,
   ValidationPipe,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
+  Query,
+  ParseFilePipe,
+  MaxFileSizeValidator,
+  FileTypeValidator,
 } from '@nestjs/common';
+import { diskStorage } from 'multer';
 import {
   BadRequestException,
   InternalServerErrorException,
@@ -24,6 +30,8 @@ import { UpdateUsername } from './dto/update-username.dto';
 import { LoginUser } from './dto/login-user.dto';
 import { RegisterUser } from 'src/user/dto/register-user.dto';
 import { loginErrorMessages } from './user.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { $File } from 'src/providers/upload/file-upload';
 
 @Controller('user')
 export class UserController {
@@ -73,12 +81,10 @@ export class UserController {
   @UsePipes(new ValidationPipe())
   async updateUsername(
     @Body() updateUsername: UpdateUsername,
+    @Query('id') id: string,
   ): Promise<ReturnUsername> {
     try {
-      return this.userService.updateUsername(
-        updateUsername.id,
-        updateUsername.username,
-      );
+      return this.userService.updateUsername(id, updateUsername.username);
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException();
@@ -88,9 +94,35 @@ export class UserController {
   @Patch('avatar')
   @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe())
-  async updateAvatar(@Body() updateUserDto: any) {
+  @UseInterceptors(
+    FileInterceptor('avatar', {
+      storage: diskStorage({
+        destination: './uploads/public',
+        filename: (req, file, callback) => {
+          new $File().publicUpload(req, file, callback);
+        },
+      }),
+    }),
+  )
+  async updateAvatar(
+    @Query('id') id: string,
+    @UploadedFile()
+    file: Express.Multer.File,
+  ) {
     try {
-      // return this.userService.update(id, updateUserDto);
+      return this.userService.updateAvatar(id, file.filename);
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException();
+    }
+  }
+
+  @Delete('avatar')
+  @UseGuards(AuthGuard)
+  @UsePipes(new ValidationPipe())
+  async removeAvatar(@Query('id') id: string) {
+    try {
+      return this.userService.removeAvatar(id);
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException();
@@ -99,9 +131,9 @@ export class UserController {
 
   @Delete()
   @UseGuards(AuthGuard)
-  async remove(@Body() body: { id: string }) {
+  async remove(@Query('id') id: string) {
     try {
-      return this.userService.remove(body.id);
+      return this.userService.remove(id);
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException();

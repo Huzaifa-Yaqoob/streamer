@@ -60,6 +60,11 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user, trigger, session }) {
       if (trigger === "update" && session?.name) {
         token.name = session.name;
+      } else if (
+        trigger === "update" &&
+        (session?.image || session.image === undefined)
+      ) {
+        token.image = session.image;
       } else if (user) {
         token.token = user.token;
         token.image = user.avatarUrl;

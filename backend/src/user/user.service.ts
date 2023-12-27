@@ -9,6 +9,7 @@ import {
   type ReturnAvatarUrl,
   type ReturnUsername,
 } from './user-types';
+import { $File } from 'src/providers/upload/file-upload';
 
 export const loginErrorMessages = {
   E: 'Email is not registered',
@@ -20,6 +21,7 @@ export class UserService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
     private readonly jwt: Jwt,
+    private readonly file: $File,
   ) {}
 
   async login(email: string, password: string): Promise<ReturnUser> {
@@ -75,15 +77,26 @@ export class UserService {
     return { username: updatedUser.username };
   }
 
-  async updateAvatar(id: string, newUsername: any) {
-    console.log(id, newUsername);
+  async updateAvatar(id: string, avatarName: string): Promise<ReturnAvatarUrl> {
+    const newAvatarUrl = this.file.getPublicFileUrl(avatarName);
+    const updatedUser = await this.userModel.findByIdAndUpdate(
+      id,
+      {
+        avatarUrl: newAvatarUrl,
+      },
+      { new: true },
+    );
+    return { avatarUrl: updatedUser.avatarUrl };
+  }
+
+  async removeAvatar(id: string) {
+    console.log(id);
     return `This action updates a #${id} user`;
   }
 
   async remove(id: string) {
     try {
       console.log(id, 'at remove user service');
-
       return true;
     } catch (error) {
       console.log(error);

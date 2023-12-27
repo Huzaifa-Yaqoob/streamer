@@ -5,6 +5,7 @@ import { UserController } from './user.controller';
 import { User, UserSchema } from './schema/user.schema';
 import { hashingPassword } from 'src/lib/password-hashed';
 import { Jwt } from 'src/providers/jwt/jwt';
+import { $File } from 'src/providers/upload/file-upload';
 
 @Module({
   imports: [
@@ -20,6 +21,6 @@ import { Jwt } from 'src/providers/jwt/jwt';
     ]),
   ],
   controllers: [UserController],
-  providers: [UserService, Jwt],
+  providers: [UserService, Jwt, $File],
 })
 export class UserModule {}
