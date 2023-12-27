@@ -23,10 +23,8 @@ export class AuthGuard implements CanActivate {
       return false;
     }
 
-    request.body = {
-      ...request.body,
-      id,
-    };
+    request.query = { id };
+
     return true;
   }
 }

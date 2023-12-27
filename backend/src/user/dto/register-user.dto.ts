@@ -15,7 +15,4 @@ export class RegisterUser {
   @MinLength(8)
   @IsNotEmpty()
   password: string;
-
-  @Optional()
-  id: string;
 }

@@ -1,15 +1,12 @@
-import {
-  Module,
-  NestModule,
-  MiddlewareConsumer,
-  RequestMethod,
-} from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 import { UserModule } from './user/user.module';
-import { ValidateObjectIdMiddleware } from './middleware/validate-objectid.middleware';
 import { Jwt } from './providers/jwt/jwt';
+import { $File } from './providers/upload/file-upload';
 
 @Module({
   imports: [
@@ -25,14 +22,12 @@ import { Jwt } from './providers/jwt/jwt';
         signOptions: { expiresIn: `${60 * 60 * 24 * 3}s` }, //expires in 3 days
       }),
     }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads', 'public'),
+      serveRoot: '/uploads/public',
+    }),
     UserModule,
   ],
-  providers: [Jwt],
+  providers: [Jwt, $File],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(ValidateObjectIdMiddleware)
-      .forRoutes({ path: 'user*:id', method: RequestMethod.PATCH });
-  }
-}
+export class AppModule {}

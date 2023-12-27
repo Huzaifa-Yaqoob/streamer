@@ -1,3 +1,4 @@
+import { MouseEventHandler } from "react";
 import { FaBandcamp } from "react-icons/fa";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
@@ -16,6 +17,7 @@ interface ButtonProps {
     | "link"
     | null
     | undefined;
+  onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
 export default function LoadingButton({
@@ -24,12 +26,14 @@ export default function LoadingButton({
   className,
   type = "submit",
   variant = "default",
+  onClick,
 }: ButtonProps): React.ReactElement {
   return (
     <Button
       type={type}
       variant={variant}
       className={cn("active:scale-95", className)}
+      onClick={onClick}
     >
       {isLoading ? (
         <>
