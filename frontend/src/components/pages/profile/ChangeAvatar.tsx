@@ -35,8 +35,14 @@ interface UpdateUsernameProps {
 
 export default function ChangeAvatar({ username }: UpdateUsernameProps) {
   const [file, setFile] = useState<any>();
-  const { isLoading, error, removeError, changeAvatar, removeAvatar } =
-    useChangeAvatar();
+  const {
+    isLoading,
+    error,
+    RisLoading,
+    removeError,
+    changeAvatar,
+    removeAvatar,
+  } = useChangeAvatar();
   const [open, setOpen] = useState(false);
   const form = useForm<z.infer<typeof avatarSchema>>({
     resolver: zodResolver(avatarSchema),
@@ -99,7 +105,7 @@ export default function ChangeAvatar({ username }: UpdateUsernameProps) {
                 </Button>
               </DialogClose>
               <LoadingButton
-                isLoading={isLoading}
+                isLoading={RisLoading}
                 text="Remove"
                 variant={"secondary"}
                 type="button"

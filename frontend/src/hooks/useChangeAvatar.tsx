@@ -1,13 +1,15 @@
 "use client";
 
 import { useState } from "react";
-
 import { useSession } from "next-auth/react";
 import { createUserInstance, headerForFormData } from "@/lib/axios";
+import { getErrorMessage } from "@/lib/error-message";
 
 export default function useChangeAvatar() {
   const { data, update } = useSession();
   const [isLoading, setIsLoading] = useState(false);
+  // loading state for removing avatar
+  const [RisLoading, setRIsLoading] = useState(false);
   const [error, setError] = useState("");
 
   const removeError = () => {
@@ -29,11 +31,7 @@ export default function useChangeAvatar() {
       return true;
     } catch (error: any) {
       console.log(error);
-      const err: string =
-        error.response.data.message ||
-        error.message ||
-        "Something`s wrong happen";
-      setError(err);
+      setError(getErrorMessage(error));
       return false;
     } finally {
       setIsLoading(false);
@@ -42,26 +40,33 @@ export default function useChangeAvatar() {
 
   const removeAvatar = async (): Promise<boolean> => {
     try {
+      if (data?.user.image === undefined) {
+        return true;
+      }
+
       setError("");
-      setIsLoading(true);
+      setRIsLoading(true);
       const res = await userInstance.delete("/avatar");
+
       update({
         image: undefined,
       });
       return true;
     } catch (error: any) {
       console.log(error);
-      const err: string =
-        error.response.data.message[0] ||
-        error.response.data.message ||
-        error.message ||
-        "Something`s wrong happen";
-      setError(err);
+      setError(getErrorMessage(error));
       return false;
     } finally {
-      setIsLoading(false);
+      setRIsLoading(false);
     }
   };
 
-  return { isLoading, error, removeError, changeAvatar, removeAvatar };
+  return {
+    isLoading,
+    error,
+    RisLoading,
+    removeError,
+    changeAvatar,
+    removeAvatar,
+  };
 }

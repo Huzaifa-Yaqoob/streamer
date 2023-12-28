@@ -6,6 +6,7 @@ import { usernameSchema } from "@/lib/zod-schemas/updateUserInfoSchema";
 import { useSession } from "next-auth/react";
 import { createUserInstance, headerForJSON } from "@/lib/axios";
 import { AxiosError } from "axios";
+import { getErrorMessage } from "@/lib/error-message";
 
 export default function useUpdateUsername() {
   const { data, update } = useSession();
@@ -25,12 +26,7 @@ export default function useUpdateUsername() {
       return true;
     } catch (error: AxiosError | any) {
       console.log(error);
-      const err: string =
-        error.response.data.message[0] ||
-        error.response.data.message ||
-        error.message ||
-        "Something`s wrong happen";
-      setError(err);
+      setError(getErrorMessage(error));
       return false;
     } finally {
       setIsLoading(false);

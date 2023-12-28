@@ -2,12 +2,22 @@ import { Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import { BadRequestException } from '@nestjs/common';
 import { Request, Express } from 'express';
+import * as fs from 'fs';
 import * as path from 'path';
 
 @Injectable()
 export class $File {
   private readonly baseUrl = '/uploads/';
   private readonly maxFileSize = 5000; // in bytes
+
+  //   method to get url for a file that uploaded in public folder
+  getPublicFileUrl(filename: string) {
+    return `${process.env.APP_URL}${process.env.PORT}${this.baseUrl}public/${filename}`;
+  }
+
+  getPublicFilePath(filename: string) {
+    return `./uploads/public/${filename}`;
+  }
 
   //   method to upload file in public folder
   publicUpload(req: Request, file: Express.Multer.File, callback: any) {
@@ -32,8 +42,19 @@ export class $File {
     callback(null, filename);
   }
 
-  //   method to get url for a file that uploaded in public folder
-  getPublicFileUrl(filename: string) {
-    return `${process.env.APP_URL}${process.env.PORT}${this.baseUrl}public/${filename}`;
+  // remove file
+  deleteFile(filePath: string) {
+    console.log(filePath);
+
+    return new Promise((resolve, reject) => {
+      fs.unlink(filePath, (error) => {
+        if (error) {
+          console.log(error);
+          reject(false);
+        } else {
+          resolve(true);
+        }
+      });
+    });
   }
 }
