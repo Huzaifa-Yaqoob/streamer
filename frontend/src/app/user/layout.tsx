@@ -11,7 +11,7 @@ export default function UserLayout({
   children,
 }: {
   children: React.ReactNode;
-}) {
+}): React.ReactElement {
   return (
     <div className="min-h-[100dvh] flex flex-col">
       <NavBar />

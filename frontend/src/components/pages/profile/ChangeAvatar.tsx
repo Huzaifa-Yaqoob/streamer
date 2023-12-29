@@ -97,7 +97,6 @@ export default function ChangeAvatar({ username }: UpdateUsernameProps) {
                 </FormItem>
               )}
             />
-            <ErrorMessage errorMessage={error} />
             <DialogFooter>
               <DialogClose asChild>
                 <Button variant={"outline"} type="button">
@@ -115,6 +114,7 @@ export default function ChangeAvatar({ username }: UpdateUsernameProps) {
             </DialogFooter>
           </form>
         </Form>
+        <ErrorMessage errorMessage={error} />
       </DialogContent>
     </Dialog>
   );
