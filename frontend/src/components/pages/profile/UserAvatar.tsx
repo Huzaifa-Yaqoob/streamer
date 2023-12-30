@@ -23,7 +23,7 @@ export default function UserAvatar({
         <AvatarFallback>{fallback}</AvatarFallback>
       </Avatar>
       <div className="absolute bottom-0 right-0">
-        <ChangeAvatar username="m" />
+        <ChangeAvatar />
       </div>
     </div>
   );

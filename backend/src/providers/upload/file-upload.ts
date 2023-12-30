@@ -47,8 +47,6 @@ export class $File {
 
   // remove file
   deleteFile(filePath: string) {
-    console.log(filePath);
-
     return new Promise((resolve, reject) => {
       fs.unlink(filePath, (error) => {
         if (error) {
