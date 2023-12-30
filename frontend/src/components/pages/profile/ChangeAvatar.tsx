@@ -26,7 +26,7 @@ import { avatarSchema } from "@/lib/zod-schemas/updateUserInfoSchema";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import useChangeAvatar from "@/hooks/useChangeAvatar";
-import LoadingButton from "@/components/common/buttons";
+import { LoadingButton } from "@/components/common/buttons";
 import ErrorMessage from "@/components/common/error-display";
 
 interface UpdateUsernameProps {
@@ -55,7 +55,7 @@ export default function ChangeAvatar({ username }: UpdateUsernameProps) {
     removeError();
   }, [open]);
 
-  async function onSubmit(values: z.infer<typeof avatarSchema>) {
+  async function onSubmit() {
     console.log(file);
     const formData = new FormData();
     formData.append("avatar", file);
@@ -88,6 +88,7 @@ export default function ChangeAvatar({ username }: UpdateUsernameProps) {
                   <FormControl>
                     <Input
                       type="file"
+                      accept="image/jpeg, image/jpg, image/png"
                       onChange={(e) => {
                         setFile(e.target.files?.[0]);
                       }}

@@ -1,7 +1,7 @@
 import { Nova_Square } from "next/font/google";
 import { cn } from "@/lib/utils";
 
-export const fontStyle = Nova_Square({
+export const fontMyStyle = Nova_Square({
   weight: ["400"],
   subsets: ["latin"],
   variable: "--nova",
@@ -19,8 +19,8 @@ export function H1({
   return (
     <h1
       className={cn(
-        "scroll-m-24 text-6xl font-extrabold tracking-tight lg:text-7xl font-style",
-        fontStyle.variable,
+        "scroll-m-24 text-6xl font-extrabold tracking-tight lg:text-7xl font-myStyle",
+        fontMyStyle.variable,
         className
       )}
     >
@@ -63,13 +63,13 @@ export function H3({
 
 export function H4({
   children,
-  className,
+  className = "",
 }: TypographyProps): React.ReactElement {
   return (
     <h4
       className={cn(
-        "scroll-m-20 text-2xl font-semibold tracking-tight font-style",
-        fontStyle.variable,
+        "scroll-m-20 text-2xl font-semibold tracking-tight font-myStyle",
+        fontMyStyle.variable,
         className
       )}
     >

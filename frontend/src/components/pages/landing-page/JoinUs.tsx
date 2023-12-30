@@ -27,7 +27,10 @@ export default function JoinUs(): React.ReactElement {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="p-8 active:scale-90 transition-transform">
+        <Button
+          type="button"
+          className="p-8 active:scale-90 transition-transform"
+        >
           <H4>Join Us</H4>
         </Button>
       </DialogTrigger>

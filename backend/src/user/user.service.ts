@@ -101,7 +101,9 @@ export class UserService {
     console.log(isDeleted);
 
     if (isDeleted) {
-      await this.userModel.findByIdAndUpdate(id, { avatarUrl: null });
+      await this.userModel.findByIdAndUpdate(id, {
+        $unset: { avatarUrl: 1 },
+      });
     } else {
       new InternalServerErrorException('Problem while deleting a file');
     }

@@ -8,7 +8,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import useDeleteAccount from "@/hooks/useDeleteAccount";
-import LoadingButton from "@/components/common/buttons";
+import { LoadingButton } from "@/components/common/buttons";
 import ErrorMessage from "@/components/common/error-display";
 import { Button } from "@/components/ui/button";
 

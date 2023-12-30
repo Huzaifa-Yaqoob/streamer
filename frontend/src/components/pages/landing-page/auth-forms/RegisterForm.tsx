@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { DialogFooter } from "@/components/ui/dialog";
-import LoadingButton from "@/components/common/buttons";
+import {LoadingButton} from "@/components/common/buttons";
 import ErrorMessage from "@/components/common/error-display";
 import useAuth from "@/hooks/useAuth";
 
