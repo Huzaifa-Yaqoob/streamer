@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import { BadRequestException } from '@nestjs/common';
-import { Request, Express } from 'express';
+import { Request } from 'express';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -12,6 +12,9 @@ export class $File {
 
   //   method to get url for a file that uploaded in public folder
   getPublicFileUrl(filename: string) {
+    if (!filename) {
+      return undefined;
+    }
     return `${process.env.APP_URL}${process.env.PORT}${this.baseUrl}public/${filename}`;
   }
 

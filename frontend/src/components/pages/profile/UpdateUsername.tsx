@@ -26,7 +26,7 @@ import { usernameSchema } from "@/lib/zod-schemas/updateUserInfoSchema";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import useUpdateUsername from "@/hooks/useUpdateUsername";
-import LoadingButton from "@/components/common/buttons";
+import { LoadingButton } from "@/components/common/buttons";
 import ErrorMessage from "@/components/common/error-display";
 
 interface UpdateUsernameProps {

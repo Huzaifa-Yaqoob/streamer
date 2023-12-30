@@ -2,10 +2,11 @@ import { MouseEventHandler } from "react";
 import { FaBandcamp } from "react-icons/fa";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
+import { H4 } from "./typography";
 
 interface ButtonProps {
   text: string;
-  isLoading: boolean;
+  isLoading?: boolean;
   className?: string;
   type?: "button" | "reset" | "submit" | undefined;
   variant?:
@@ -20,7 +21,7 @@ interface ButtonProps {
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
-export default function LoadingButton({
+export function LoadingButton({
   text,
   isLoading,
   className,

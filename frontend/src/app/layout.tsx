@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
+import type { Metadata } from "next";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 import NextAuthProvider from "@/provider/NextAuthProvider";
 
-export const fontSans = Montserrat({
+const fontMySans = Montserrat({
   subsets: ["latin"],
   variable: "--montserrat",
 });
@@ -20,12 +20,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body
-        className={cn("bg-background font-sans antialiased", fontSans.variable)}
-      >
-        <NextAuthProvider>{children}</NextAuthProvider>
-      </body>
+    <html lang="en" suppressHydrationWarning>
+      <NextAuthProvider>
+        <body
+          className={cn(
+            "min-h-screen bg-background font-mySans antialiased",
+            fontMySans.variable
+          )}
+        >
+          {children}
+        </body>
+      </NextAuthProvider>
     </html>
   );
 }
