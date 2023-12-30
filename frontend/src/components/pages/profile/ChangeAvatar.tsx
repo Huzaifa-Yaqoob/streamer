@@ -12,6 +12,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
 import {
   Dialog,
@@ -29,11 +30,7 @@ import useChangeAvatar from "@/hooks/useChangeAvatar";
 import { LoadingButton } from "@/components/common/buttons";
 import ErrorMessage from "@/components/common/error-display";
 
-interface UpdateUsernameProps {
-  username: string;
-}
-
-export default function ChangeAvatar({ username }: UpdateUsernameProps) {
+export default function ChangeAvatar() {
   const [file, setFile] = useState<any>();
   const {
     isLoading,
@@ -56,7 +53,6 @@ export default function ChangeAvatar({ username }: UpdateUsernameProps) {
   }, [open]);
 
   async function onSubmit() {
-    console.log(file);
     const formData = new FormData();
     formData.append("avatar", file);
     const ok = await changeAvatar(formData);
@@ -94,6 +90,9 @@ export default function ChangeAvatar({ username }: UpdateUsernameProps) {
                       }}
                     />
                   </FormControl>
+                  <FormDescription>
+                    Only jpeg, jpg andd png images are allowed.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

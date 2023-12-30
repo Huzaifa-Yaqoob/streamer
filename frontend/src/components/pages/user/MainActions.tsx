@@ -8,7 +8,7 @@ import {
   DialogHeader,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import UploadVideo from "./forms/UploadVideo";
+import UploadMovie from "./forms/UploadMovie";
 import CreateGroup from "./forms/CreateGroup";
 import { H4 } from "@/components/common/typography";
 type Variant =
@@ -30,16 +30,16 @@ interface dialogsData {
 
 const dialogsData: dialogsData[] = [
   {
-    btnText: "Upload video",
-    dialogTitle: "Upload Video",
+    btnText: "Upload movie",
+    dialogTitle: "Upload movie",
     btnVariant: "secondary",
-    dialogForm: UploadVideo,
+    dialogForm: UploadMovie,
   },
   {
     btnText: "Create group",
     dialogTitle: "Create Group",
-    dialogForm: CreateGroup,
     btnVariant: "default",
+    dialogForm: CreateGroup,
   },
 ];
 

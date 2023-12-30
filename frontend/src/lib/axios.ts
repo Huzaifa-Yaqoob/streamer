@@ -12,9 +12,20 @@ export const headerForFormData: Headers = {
   "Content-Type": "multipart/form-data",
 };
 
-export function createUserInstance(headers = headerForJSON): AxiosInstance {
+export function createUserInstance(
+  headers: Headers = headerForJSON
+): AxiosInstance {
   return axios.create({
     baseURL: "http://localhost:3300/user",
+    headers,
+  });
+}
+
+export function createUserMoviesInstance(
+  headers: Headers = headerForFormData
+): AxiosInstance {
+  return axios.create({
+    baseURL: "http://localhost:3300/user-movies",
     headers,
   });
 }

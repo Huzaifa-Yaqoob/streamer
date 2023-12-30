@@ -7,6 +7,7 @@ import { join } from 'path';
 import { UserModule } from './user/user.module';
 import { Jwt } from './providers/jwt/jwt';
 import { $File } from './providers/upload/file-upload';
+import { UserMoviesModule } from './user-movies/user-movies.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { $File } from './providers/upload/file-upload';
       serveRoot: '/uploads/public',
     }),
     UserModule,
+    UserMoviesModule,
   ],
   providers: [Jwt, $File],
 })

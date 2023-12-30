@@ -89,7 +89,6 @@ export class UserService {
   }
 
   async removeAvatar(id: string) {
-    console.log(id);
     const user = await this.userModel.findById(id);
     if (!user.avatarUrl) {
       return { success: true };
@@ -97,8 +96,6 @@ export class UserService {
     const isDeleted = await this.file.deleteFile(
       this.file.getPublicFilePath(user.avatarUrl),
     );
-
-    console.log(isDeleted);
 
     if (isDeleted) {
       await this.userModel.findByIdAndUpdate(id, {
