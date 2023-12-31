@@ -25,24 +25,27 @@ import { Button } from "@/components/ui/button";
 import useMovieAPI from "@/hooks/useMovieAPI";
 
 export default function UploadMovie(): React.ReactElement {
-  const [file, setFile] = useState<any>();
   const [open, setOpen] = useState(false);
   const { isLoading, error, progressPercent, uploadMovie, removeError } =
     useMovieAPI();
   const form = useForm<z.infer<typeof movieSchema>>({
     resolver: zodResolver(movieSchema),
     defaultValues: {
-      movie: "",
+      movie: null,
+      movieName: "",
     },
   });
 
   useEffect(() => {
     removeError();
+    form.reset();
   }, [open]);
 
-  async function onSubmit() {
+  async function onSubmit(value: z.infer<typeof movieSchema>) {
     const formData = new FormData();
-    formData.append("movie", file);
+    formData.append("movie", value.movie as File);
+    formData.append("movieName", value.movieName);
+    console.log(value);
     const ok = await uploadMovie(formData);
     if (ok) {
       setOpen(false);
@@ -57,6 +60,20 @@ export default function UploadMovie(): React.ReactElement {
         >
           <FormField
             control={form.control}
+            name="movieName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Movie</FormLabel>
+                <FormControl>
+                  <Input type="text" {...field} />
+                </FormControl>
+                <FormDescription>Only mp4 videos are allowed.</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="movie"
             render={({ field }) => (
               <FormItem>
@@ -65,8 +82,12 @@ export default function UploadMovie(): React.ReactElement {
                   <Input
                     type="file"
                     accept="video/mp4"
+                    name={field.name}
+                    ref={field.ref}
+                    onBlur={field.onBlur}
+                    disabled={field.disabled}
                     onChange={(e) => {
-                      setFile(e.target.files?.[0]);
+                      field.onChange(e.target.files?.[0]);
                     }}
                   />
                 </FormControl>
