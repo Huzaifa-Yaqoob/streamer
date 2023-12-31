@@ -31,7 +31,6 @@ import { LoadingButton } from "@/components/common/buttons";
 import ErrorMessage from "@/components/common/error-display";
 
 export default function ChangeAvatar() {
-  const [file, setFile] = useState<any>();
   const {
     isLoading,
     error,
@@ -44,17 +43,18 @@ export default function ChangeAvatar() {
   const form = useForm<z.infer<typeof avatarSchema>>({
     resolver: zodResolver(avatarSchema),
     defaultValues: {
-      avatar: "",
+      avatar: null,
     },
   });
 
   useEffect(() => {
     removeError();
+    form.reset();
   }, [open]);
 
-  async function onSubmit() {
+  async function onSubmit(value: z.infer<typeof avatarSchema>) {
     const formData = new FormData();
-    formData.append("avatar", file);
+    formData.append("avatar", value.avatar as File);
     const ok = await changeAvatar(formData);
     if (ok) {
       setOpen(false);
@@ -85,8 +85,12 @@ export default function ChangeAvatar() {
                     <Input
                       type="file"
                       accept="image/jpeg, image/jpg, image/png"
+                      name={field.name}
+                      ref={field.ref}
+                      onBlur={field.onBlur}
+                      disabled={field.disabled}
                       onChange={(e) => {
-                        setFile(e.target.files?.[0]);
+                        field.onChange(e.target.files?.[0]);
                       }}
                     />
                   </FormControl>
@@ -108,7 +112,12 @@ export default function ChangeAvatar() {
                 text="Remove"
                 variant={"secondary"}
                 type="button"
-                onClick={() => removeAvatar()}
+                onClick={async () => {
+                  const ok = await removeAvatar();
+                  if (ok) {
+                    setOpen(false);
+                  }
+                }}
               />
               <LoadingButton isLoading={isLoading} text="Update" />
             </DialogFooter>

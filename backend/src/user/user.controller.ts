@@ -10,11 +10,7 @@ import {
   UseInterceptors,
   UploadedFile,
   Query,
-  ParseFilePipe,
-  MaxFileSizeValidator,
-  FileTypeValidator,
 } from '@nestjs/common';
-import { diskStorage } from 'multer';
 import {
   BadRequestException,
   InternalServerErrorException,
@@ -31,7 +27,7 @@ import { LoginUser } from './dto/login-user.dto';
 import { RegisterUser } from 'src/user/dto/register-user.dto';
 import { loginErrorMessages } from './user.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { $File } from 'src/providers/upload/file-upload';
+import { AvatarFilePipePipe } from './pipes/avatar-file-pipe/avatar-file-pipe.pipe';
 
 @Controller('user')
 export class UserController {
@@ -94,23 +90,14 @@ export class UserController {
   @Patch('avatar')
   @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe())
-  @UseInterceptors(
-    FileInterceptor('avatar', {
-      storage: diskStorage({
-        destination: './uploads/public',
-        filename: (req, file, callback) => {
-          new $File().publicUpload(req, file, callback);
-        },
-      }),
-    }),
-  )
+  @UseInterceptors(FileInterceptor('avatar'))
   async updateAvatar(
     @Query('id') id: string,
-    @UploadedFile()
+    @UploadedFile(new AvatarFilePipePipe())
     file: Express.Multer.File,
-  ) {
+  ): Promise<ReturnAvatarUrl> {
     try {
-      return this.userService.updateAvatar(id, file.filename);
+      return this.userService.updateAvatar(id, file);
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException();

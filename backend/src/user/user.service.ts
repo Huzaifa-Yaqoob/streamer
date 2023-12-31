@@ -77,11 +77,22 @@ export class UserService {
     return { username: updatedUser.username };
   }
 
-  async updateAvatar(id: string, avatarName: string): Promise<ReturnAvatarUrl> {
+  async updateAvatar(
+    id: string,
+    avatar: Express.Multer.File,
+  ): Promise<ReturnAvatarUrl> {
+    const user = await this.userModel.findById(id);
+    if (user.avatarUrl) {
+      await this.file.deleteFile(this.file.getPublicFilePath(user.avatarUrl));
+    }
+    const avatarPath = this.file.getPublicFilePathAndName(avatar.originalname);
+
+    await this.file.fileUpload(avatar, avatarPath.path);
+
     const updatedUser = await this.userModel.findByIdAndUpdate(
       id,
       {
-        avatarUrl: avatarName,
+        avatarUrl: avatarPath.name,
       },
       { new: true },
     );
@@ -102,7 +113,7 @@ export class UserService {
         $unset: { avatarUrl: 1 },
       });
     } else {
-      new InternalServerErrorException('Problem while deleting a file');
+      throw new InternalServerErrorException('Problem while deleting a file');
     }
 
     return { success: true };
