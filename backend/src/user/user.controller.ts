@@ -25,9 +25,8 @@ import { UserService } from './user.service';
 import { UpdateUsername } from './dto/update-username.dto';
 import { LoginUser } from './dto/login-user.dto';
 import { RegisterUser } from 'src/user/dto/register-user.dto';
-import { loginErrorMessages } from './user.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { AvatarFilePipePipe } from './pipes/avatar-file-pipe/avatar-file-pipe.pipe';
+import { AvatarFilePipePipe } from '../pipes/avatar-file-pipe/avatar-file-pipe.pipe';
 
 @Controller('user')
 export class UserController {
@@ -44,12 +43,6 @@ export class UserController {
       return loggedInUser;
     } catch (error) {
       console.log(error, 'At logging in user');
-      if (error.message === loginErrorMessages.E) {
-        throw new BadRequestException(loginErrorMessages.E);
-      }
-      if (error.message === loginErrorMessages.P) {
-        throw new BadRequestException(loginErrorMessages.P);
-      }
       throw new InternalServerErrorException();
     }
   }
@@ -89,7 +82,6 @@ export class UserController {
 
   @Patch('avatar')
   @UseGuards(AuthGuard)
-  @UsePipes(new ValidationPipe())
   @UseInterceptors(FileInterceptor('avatar'))
   async updateAvatar(
     @Query('id') id: string,

@@ -14,12 +14,14 @@ import { $File } from 'src/providers/upload/file-upload';
         name: User.name,
         useFactory: () => {
           const schema = UserSchema;
+          // hash password before saving new documents
           schema.pre('save', hashingPassword);
           return schema;
         },
       },
     ]),
   ],
+  exports: [MongooseModule],
   controllers: [UserController],
   providers: [UserService, Jwt, $File],
 })

@@ -1,4 +1,3 @@
-import { Optional } from '@nestjs/common';
 import { IsEmail, IsNotEmpty, MaxLength, MinLength } from 'class-validator';
 
 export class RegisterUser {

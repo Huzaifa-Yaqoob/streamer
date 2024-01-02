@@ -6,10 +6,10 @@ export type CatDocument = HydratedDocument<UserMovie>;
 @Schema({ timestamps: true })
 export class UserMovie {
   @Prop({ required: true })
-  fileName: string;
+  movieName: string;
 
-  @Prop({ required: true })
-  fileDisplayName: string;
+  @Prop({ required: true, minlength: 1, maxlength: 25 })
+  movieDisplayName: string;
 }
 
 export const UserMovieSchema = SchemaFactory.createForClass(UserMovie);

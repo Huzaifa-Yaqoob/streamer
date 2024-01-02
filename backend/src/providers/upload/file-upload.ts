@@ -6,23 +6,26 @@ import * as path from 'path';
 
 @Injectable()
 export class $File {
-  private readonly baseUrl = '/uploads/';
+  private readonly baseUrl = './uploads';
 
   //   method to get url for a file that uploaded in public folder
-  getPublicFileUrl(filename: string) {
+  getFileUrl(filename: string, folder: 'public' | 'private') {
     if (!filename) {
       return undefined;
     }
-    return `${process.env.APP_URL}${process.env.PORT}${this.baseUrl}public/${filename}`;
+    return `${process.env.APP_URL}${process.env.PORT}${this.baseUrl}/${folder}/${filename}`;
   }
 
-  getPublicFilePathAndName(filename: string) {
+  getFilePathAndName(filename: string, folder: 'public' | 'private') {
     const uniqueName: string = uuidv4() + path.extname(filename);
-    return { path: `./uploads/public/${uniqueName}`, name: uniqueName };
+    return {
+      path: `./${this.baseUrl}/${folder}/${uniqueName}`,
+      name: uniqueName,
+    };
   }
 
-  getPublicFilePath(filename: string) {
-    return `./uploads/public/${filename}`;
+  getFilePath(filename: string, folder: 'public' | 'private') {
+    return `./${this.baseUrl}/${folder}/${filename}`;
   }
 
   async checkExistenceOfFile(filePath: string): Promise<boolean> {
@@ -50,6 +53,7 @@ export class $File {
       });
 
       writeStream.end();
+      return true;
     } catch (error) {
       throw new InternalServerErrorException(
         'Got problems at backend while saving your file',

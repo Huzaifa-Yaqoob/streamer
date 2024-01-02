@@ -63,7 +63,7 @@ export default function UploadMovie(): React.ReactElement {
             name="movieName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Movie</FormLabel>
+                <FormLabel>Movie name</FormLabel>
                 <FormControl>
                   <Input type="text" {...field} />
                 </FormControl>
