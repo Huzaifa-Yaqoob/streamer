@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { revalidateTag } from "next/cache";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { P, Small } from "@/components/common/typography";
+import revalidateMovies from "@/app/actions";
+import { P } from "@/components/common/typography";
 import { fontMyStyle } from "@/components/common/typography";
 import {
   Form,
@@ -48,6 +50,7 @@ export default function UploadMovie(): React.ReactElement {
     console.log(value);
     const ok = await uploadMovie(formData);
     if (ok) {
+      revalidateMovies();
       setOpen(false);
     }
   }

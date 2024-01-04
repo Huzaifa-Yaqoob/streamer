@@ -2,7 +2,6 @@ import { MouseEventHandler } from "react";
 import { FaBandcamp } from "react-icons/fa";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
-import { H4 } from "./typography";
 
 interface ButtonProps {
   text: string;

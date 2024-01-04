@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 import NextAuthProvider from "@/provider/NextAuthProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 const fontMySans = Montserrat({
   subsets: ["latin"],
@@ -28,6 +29,7 @@ export default function RootLayout({
             fontMySans.variable
           )}
         >
+          <Toaster />
           {children}
         </body>
       </NextAuthProvider>

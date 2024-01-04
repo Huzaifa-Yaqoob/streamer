@@ -12,3 +12,7 @@ export const movieSchema = z.object({
     }),
   movieName: z.string().min(1).max(25),
 });
+
+export const renameMovieSchema = z.object({
+  movieName: z.string().min(1).max(25),
+});

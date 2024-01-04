@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from 'src/user/schema/user.schema';
 import { UserMovie } from './schema/user-movie.schema';
-import { CreateUserMovieDto } from './dto/create-user-movie.dto';
 import { UpdateUserMovieDto } from './dto/update-user-movie.dto';
 import { $File } from 'src/providers/upload/file-upload';
 
@@ -48,19 +47,26 @@ export class UserMoviesService {
   }
 
   async findAll(id: string) {
-    const user = await this.userModel.findById(id);
-    return `This action returns all userMovies`;
+    const user = await this.userModel.findById(id).populate({
+      path: 'userMovies',
+      select: '_id movieName movieDisplayName',
+      options: { sort: { createdAt: -1 } },
+    });
+    return user.userMovies;
   }
 
   findOne(id: number) {
     return `This action returns a #${id} userMovie`;
   }
 
-  update(id: number, updateUserMovieDto: UpdateUserMovieDto) {
-    return `This action updates a #${id} userMovie`;
+  async rename(id: string, updateUserMovieDto: UpdateUserMovieDto) {
+    await this.userMovieModel.findByIdAndUpdate(id, {
+      movieDisplayName: updateUserMovieDto.movieName,
+    });
+    return { success: true };
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} userMovie`;
+  remove(id: string) {
+    return { success: true };
   }
 }

@@ -1,4 +1,6 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { PartialType, PickType } from '@nestjs/mapped-types';
 import { CreateUserMovieDto } from './create-user-movie.dto';
 
-export class UpdateUserMovieDto extends PartialType(CreateUserMovieDto) {}
+export class UpdateUserMovieDto extends PickType(CreateUserMovieDto, [
+  'movieName',
+]) {}
