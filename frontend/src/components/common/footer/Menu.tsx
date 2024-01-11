@@ -18,7 +18,7 @@ export default function Menu(): React.ReactElement {
         <Link
           href={link.href}
           key={index}
-          className={`flex flex-col items-center gap-2 ${
+          className={`flex flex-col items-center gap-2 active:scale-95 transition-transform ${
             pathname === link.href ? "text-primary" : ""
           }`}
         >

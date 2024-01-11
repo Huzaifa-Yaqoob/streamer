@@ -5,7 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from 'src/user/user.module';
 import { UserMovie, UserMovieSchema } from './schema/user-movie.schema';
 import { Jwt } from 'src/providers/jwt/jwt';
-import { $File } from 'src/providers/upload/file-upload';
+import { $File } from 'src/providers/file/file-func';
 
 @Module({
   imports: [

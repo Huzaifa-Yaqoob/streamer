@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Dialog,
   DialogTrigger,
@@ -16,14 +18,22 @@ interface MovieModelProps {
 export default function MovieModel({ movie }: MovieModelProps) {
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <MovieCard movie={movie} />
+      <DialogTrigger asChild className="active:scale-95 transition-transform">
+        <div>
+          <MovieCard movie={movie} />
+        </div>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{movie.movieDisplayName}</DialogTitle>
         </DialogHeader>
-        <AspectRatio ratio={16 / 9} className="bg-accent"></AspectRatio>
+        <AspectRatio ratio={16 / 9} className="bg-accent">
+          <video
+            className="w-full h-full object-contain"
+            controls
+            src={`http://localhost:3300/uploads/private/${movie.movieName}`}
+          ></video>
+        </AspectRatio>
       </DialogContent>
     </Dialog>
   );

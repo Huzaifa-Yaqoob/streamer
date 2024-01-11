@@ -19,5 +19,6 @@
     "titleBar.inactiveBackground": "#01032199",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.color": "#010321"
+  "peacock.color": "#010321",
+  "cSpell.words": ["Streamable"]
 }

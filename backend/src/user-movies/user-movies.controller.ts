@@ -30,13 +30,13 @@ export class UserMoviesController {
   @Post()
   @UseInterceptors(FileInterceptor('movie'))
   @UsePipes(new ValidationPipe())
-  async create(
+  create(
     @Query('id') id: string,
     @UploadedFile(new MovieFilePipePipe()) file: Express.Multer.File,
     @Body() body: CreateUserMovieDto,
   ) {
     try {
-      return await this.userMoviesService.upload(id, body.movieName, file);
+      return this.userMoviesService.upload(id, body.movieName, file);
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException();
@@ -44,32 +44,34 @@ export class UserMoviesController {
   }
 
   @Get()
-  async findAll(@Query('id') id: string) {
+  findAll(@Query('id') id: string) {
     try {
-      return await this.userMoviesService.findAll(id);
+      return this.userMoviesService.findAll(id);
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException();
     }
   }
 
-  @Get(':id')
-  @UseGuards(MovieOwnerGuard)
-  async findOne(@Param('id') id: string) {
-    try {
-      return await this.userMoviesService.findAll(id);
-    } catch (error) {
-      console.log(error);
-      throw new InternalServerErrorException();
-    }
-  }
+  // i will implement this feature latter
+  // @Get(':id')
+  // @UseGuards(MovieOwnerGuard)
+  // findOne(@Param('id') id: string, @Query('id') userId: string) {
+  //   try {
+  //     console.log(id);
+  //     return this.userMoviesService.findOne(id);
+  //   } catch (error) {
+  //     console.log(error);
+  //     throw new InternalServerErrorException();
+  //   }
+  // }
 
   @Patch(':id')
   @UseGuards(MovieOwnerGuard)
   @UsePipes(new ValidationPipe())
-  async rename(@Param('id') id: string, @Body() body: UpdateUserMovieDto) {
+  rename(@Param('id') id: string, @Body() body: UpdateUserMovieDto) {
     try {
-      return await this.userMoviesService.rename(id, body);
+      return this.userMoviesService.rename(id, body);
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException();
@@ -78,9 +80,9 @@ export class UserMoviesController {
 
   @Delete(':id')
   @UseGuards(MovieOwnerGuard)
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string, @Query('id') userId: string) {
     try {
-      return this.userMoviesService.remove(id);
+      return this.userMoviesService.remove(id, userId);
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException();

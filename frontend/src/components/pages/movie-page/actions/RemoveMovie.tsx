@@ -1,11 +1,11 @@
 "use client";
 
-import { toast } from "sonner";
 import { FaTrashCan } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import Spinner from "@/components/common/Spinner";
 import useMovieAPI from "@/hooks/useMovieAPI";
 import revalidateMovies from "@/app/actions";
+import { toast } from "sonner";
 
 interface RemoveMovieProps {
   id: string;
@@ -17,17 +17,16 @@ export default function RemoveMovie({ id }: RemoveMovieProps) {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.stopPropagation();
-    console.log("i am clicked");
     const ok = await removeMovie(id);
     if (ok) {
-      toast("Successfully deleted your movie");
+      console.log("as");
       revalidateMovies();
-    } else {
-      if (error !== "") {
-        toast(error);
-      }
     }
   };
+
+  if (error !== "") {
+    toast(error);
+  }
 
   return (
     <Button

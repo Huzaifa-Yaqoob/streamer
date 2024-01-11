@@ -1,10 +1,16 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  StreamableFile,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from 'src/user/schema/user.schema';
 import { UserMovie } from './schema/user-movie.schema';
 import { UpdateUserMovieDto } from './dto/update-user-movie.dto';
-import { $File } from 'src/providers/upload/file-upload';
+import { $File } from 'src/providers/file/file-func';
+import { createReadStream } from 'fs';
+import { join } from 'path';
 
 @Injectable()
 export class UserMoviesService {
@@ -55,8 +61,10 @@ export class UserMoviesService {
     return user.userMovies;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} userMovie`;
+  findOne(id: string) {
+    console.log(id);
+
+    return {};
   }
 
   async rename(id: string, updateUserMovieDto: UpdateUserMovieDto) {
@@ -66,7 +74,20 @@ export class UserMoviesService {
     return { success: true };
   }
 
-  remove(id: string) {
+  async remove(id: string, userId: string) {
+    const movieData = await this.userMovieModel.findById(id);
+    if (!movieData) {
+      return { success: true };
+    }
+    const path = this.file.getFilePath(movieData.movieName, 'private');
+    const isDeleted = await this.file.deleteFile(path);
+    if (isDeleted) {
+      await this.userModel.findByIdAndUpdate(userId, {
+        $pull: { userMovies: id },
+      });
+      await movieData.deleteOne({ _id: id });
+    }
+
     return { success: true };
   }
 }

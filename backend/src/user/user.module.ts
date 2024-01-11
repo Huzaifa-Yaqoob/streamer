@@ -5,7 +5,7 @@ import { UserController } from './user.controller';
 import { User, UserSchema } from './schema/user.schema';
 import { hashingPassword } from 'src/lib/password-hashed';
 import { Jwt } from 'src/providers/jwt/jwt';
-import { $File } from 'src/providers/upload/file-upload';
+import { $File } from 'src/providers/file/file-func';
 
 @Module({
   imports: [

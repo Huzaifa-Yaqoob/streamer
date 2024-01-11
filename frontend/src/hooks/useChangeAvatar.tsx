@@ -24,7 +24,7 @@ export default function useChangeAvatar() {
       setError("");
       setIsLoading(true);
       const res = await userInstance.patch("/avatar", value);
-
+      console.log(res);
       update({
         image: res.data.avatarUrl,
       });

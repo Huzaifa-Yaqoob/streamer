@@ -13,7 +13,7 @@ import {
   type ReturnAvatarUrl,
   type ReturnUsername,
 } from './user-types';
-import { $File } from 'src/providers/upload/file-upload';
+import { $File } from 'src/providers/file/file-func';
 
 export const loginErrorMessages = {
   E: 'Email is not registered',
@@ -102,12 +102,14 @@ export class UserService {
     // storing file wih path
     await this.file.fileUpload(avatar, avatarPath.path);
     // updated user data in db
-    const updatedUser = await user.updateOne(
+    const updatedUser = await this.userModel.findByIdAndUpdate(
+      id,
       {
         avatarUrl: avatarPath.name,
       },
       { new: true },
     );
+    console.log(updatedUser);
     return { avatarUrl: this.file.getFileUrl(updatedUser.avatarUrl, 'public') };
   }
 

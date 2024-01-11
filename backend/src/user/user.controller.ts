@@ -34,15 +34,12 @@ export class UserController {
 
   @Post('login')
   @UsePipes(new ValidationPipe())
-  async login(@Body() user: LoginUser): Promise<ReturnUser> {
+  login(@Body() user: LoginUser): Promise<ReturnUser> {
     try {
-      const loggedInUser = await this.userService.login(
-        user.email,
-        user.password,
-      );
+      const loggedInUser = this.userService.login(user.email, user.password);
       return loggedInUser;
     } catch (error) {
-      console.log(error, 'At logging in user');
+      console.log(error);
       throw new InternalServerErrorException();
     }
   }
@@ -51,7 +48,7 @@ export class UserController {
   @UsePipes(new ValidationPipe())
   async register(@Body() user: RegisterUser): Promise<ReturnUser> {
     try {
-      const newUser = await this.userService.register(
+      const newUser = this.userService.register(
         user.email,
         user.username,
         user.password,
@@ -68,7 +65,7 @@ export class UserController {
   @Patch('username')
   @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe())
-  async updateUsername(
+  updateUsername(
     @Body() updateUsername: UpdateUsername,
     @Query('id') id: string,
   ): Promise<ReturnUsername> {
@@ -83,7 +80,7 @@ export class UserController {
   @Patch('avatar')
   @UseGuards(AuthGuard)
   @UseInterceptors(FileInterceptor('avatar'))
-  async updateAvatar(
+  updateAvatar(
     @Query('id') id: string,
     @UploadedFile(new AvatarFilePipePipe())
     file: Express.Multer.File,
@@ -99,7 +96,7 @@ export class UserController {
   @Delete('avatar')
   @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe())
-  async removeAvatar(@Query('id') id: string) {
+  removeAvatar(@Query('id') id: string) {
     try {
       return this.userService.removeAvatar(id);
     } catch (error) {
@@ -110,7 +107,7 @@ export class UserController {
 
   @Delete()
   @UseGuards(AuthGuard)
-  async remove(@Query('id') id: string) {
+  remove(@Query('id') id: string) {
     try {
       return this.userService.remove(id);
     } catch (error) {

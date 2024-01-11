@@ -6,7 +6,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { UserModule } from './user/user.module';
 import { Jwt } from './providers/jwt/jwt';
-import { $File } from './providers/upload/file-upload';
+import { $File } from './providers/file/file-func';
 import { UserMoviesModule } from './user-movies/user-movies.module';
 
 @Module({
@@ -24,8 +24,8 @@ import { UserMoviesModule } from './user-movies/user-movies.module';
       }),
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'uploads', 'public'),
-      serveRoot: '/uploads/public',
+      rootPath: join(__dirname, '..', 'uploads'),
+      serveRoot: '/uploads',
     }),
     UserModule,
     UserMoviesModule,

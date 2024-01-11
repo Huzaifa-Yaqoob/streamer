@@ -60,8 +60,8 @@ export default function UpdateMovieName({
     }
     const ok = await renameMovie(id, values);
     if (ok) {
-      revalidateMovies();
       setOpen(false);
+      revalidateMovies();
     }
   }
   return (
@@ -70,7 +70,7 @@ export default function UpdateMovieName({
         e.stopPropagation();
       }}
     >
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button variant={"secondary"} className="text-lg">
             <FaEdit />
@@ -92,7 +92,11 @@ export default function UpdateMovieName({
                   <FormItem>
                     <FormLabel>Movie name</FormLabel>
                     <FormControl>
-                      <Input type="text" placeholder={"asd"} {...field} />
+                      <Input
+                        type="text"
+                        placeholder={"movie name"}
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

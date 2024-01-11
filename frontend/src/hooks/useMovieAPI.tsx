@@ -89,6 +89,7 @@ export default function useMovieAPI() {
       setRMError("");
       const res = await userMoviesInstanceJ.delete(`/${id}`);
       console.log(res);
+      return true;
     } catch (error) {
       console.log(error);
       setRMError(getErrorMessage(error));
