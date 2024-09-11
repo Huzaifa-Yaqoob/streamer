@@ -86,6 +86,7 @@ export class UserController {
     file: Express.Multer.File,
   ): Promise<ReturnAvatarUrl> {
     try {
+      console.log('I ma here');
       return this.userService.updateAvatar(id, file);
     } catch (error) {
       console.log(error);

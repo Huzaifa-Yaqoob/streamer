@@ -52,3 +52,40 @@
   color: hsl(var(--accent-foreground));
   background-color: hsl(var(--accent));
 }
+
+/* Define the styles for the scrollbar track */
+::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+  background-color: transparent; /* Transparent background */
+}
+
+/* Define the styles for the scrollbar thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--muted)); /* Red color for the thumb */
+  border-radius: 6px; /* Rounded edges */
+}
+
+/* Optional: Style for the scrollbar corner */
+::-webkit-scrollbar-corner {
+  background-color: transparent; /* Transparent background */
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+* {
+  scrollbar-width: thin; /* Width of the scrollbar */
+  scrollbar-color: hsl(var(--muted)) transparent; /* Red color for the thumb and transparent background */
+}
+
+/* Define the styles for the scrollbar thumb (the draggable part) */
+/* Firefox */
+*::-webkit-scrollbar-thumb {
+  background-color: red; /* Red color for the thumb */
+  border-radius: 6px; /* Rounded edges */
+}
+
+*::-webkit-scrollbar-button {
+  display: none;
+}

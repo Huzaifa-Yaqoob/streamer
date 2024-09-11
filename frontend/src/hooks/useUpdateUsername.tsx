@@ -22,9 +22,11 @@ export default function useUpdateUsername() {
       setIsLoading(true);
       const res = await userInstance.patch("/username", value);
       console.log(res);
+      console.log("sadasda");
       update({ name: res.data.username || data?.user.name || "unknown" });
       return true;
     } catch (error: AxiosError | any) {
+      console.log("sadasda");
       console.log(error);
       setError(getErrorMessage(error));
       return false;

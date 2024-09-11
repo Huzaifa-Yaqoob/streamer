@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import { Jwt } from './providers/jwt/jwt';
 import { $File } from './providers/file/file-func';
 import { UserMoviesModule } from './user-movies/user-movies.module';
+import { GroupGateway } from './group/group.gateway';
 
 @Module({
   imports: [
@@ -30,6 +31,6 @@ import { UserMoviesModule } from './user-movies/user-movies.module';
     UserModule,
     UserMoviesModule,
   ],
-  providers: [Jwt, $File],
+  providers: [Jwt, $File, GroupGateway],
 })
 export class AppModule {}

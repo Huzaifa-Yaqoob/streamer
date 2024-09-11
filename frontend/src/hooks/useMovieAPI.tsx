@@ -38,9 +38,9 @@ export default function useMovieAPI() {
   // adding token in the header
   headerForFormData.authorization = data?.user.token;
   headerForJSON.authorization = data?.user.token;
-  // instance for to send form data
+  // instance to send form data
   const userMoviesInstance = createUserMoviesInstance(headerForFormData);
-  // instance for to send json data
+  // instance to send json data
   const userMoviesInstanceJ = createUserMoviesInstance(headerForJSON);
 
   const uploadMovie = async (value: any) => {
@@ -55,6 +55,7 @@ export default function useMovieAPI() {
           setProgressPercent(percentCompleted);
         },
       });
+      console.log(res, "responded");
       return true;
     } catch (error: any | AxiosError) {
       console.log(error);

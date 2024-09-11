@@ -31,7 +31,7 @@ export default function MovieModel({ movie }: MovieModelProps) {
           <video
             className="w-full h-full object-contain"
             controls
-            src={`http://localhost:3300/uploads/private/${movie.movieName}`}
+            src={`${process.env.BACKEND_URL}uploads/private/${movie.movieName}`}
           ></video>
         </AspectRatio>
       </DialogContent>
